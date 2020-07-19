@@ -1,0 +1,12 @@
+FROM tensorflow/tensorflow:1.14.0-gpu-py3-jupyter
+WORKDIR /
+ENV TZ=Europe/Warsaw LC_ALL=C.UTF-8 LANG=C.UTF-8 DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt install -qq protobuf-compiler python-pil python-lxml python-tk -y
+RUN pip install aiohttp==3.6.2 minio==5.0.7 jinja2==2.11.1 cachetools==4.0.0 pyyaml==5.3 watchdog[watchmedo] aiohttp_cors==0.7.0 ujson==1.35 Cython contextlib2 pillow lxml matplotlib pycocotools pandas sklearn
+RUN apt install curl git cmake ack vim-youcompleteme vim-syntastic -yq
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/qooba/vim-python-ide/master/setup.sh)"
+ENV PYTHONPATH="/server:/server/slim:/server/object_detection"
+COPY ./server /server
+WORKDIR /server/
+CMD watchmedo auto-restart -d . -p '*.py' --recursive -- python3 microscope.py
+
