@@ -13,7 +13,7 @@ docker run -d --rm -p 9000:9000 --network app_default --name minio \
   -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" \
   -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
   -v $(pwd)/data:/data \
-  qooba/jetson:minio server /data
+  qooba/deepmicroscopy:minio server /data
 
 
 #docker run --runtime nvidia --network app_default -d --rm --device=/dev/video0:/dev/video0 -p 80:80 -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix -v $APP_HOME/app:/app --name api -e minio_access_key='AKIAIOSFODNN7EXAMPLE' -e minio_secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY' qooba/jetson:microscope /start-reload.sh
@@ -33,7 +33,7 @@ docker run --runtime nvidia --network app_default -d --rm \
   -v $(pwd)/src/jupyter:/root/.jupyter \
   -v $(pwd)/ssl:/ssl \
   --name app_rtc \
-  qooba/deepmicroscopy \
+  qooba/deepmicroscopy:app_dev \
   watchmedo auto-restart -d . -p '*.py' --recursive -- python3 microscope.py
 
 #docker run --network app_default -it --rm -v /home/qba/Qooba/deepmicroscopy:/app --name app registry.gitlab.com/qooba/deepmicroscopy vim /app
