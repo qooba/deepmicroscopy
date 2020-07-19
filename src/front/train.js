@@ -81,7 +81,7 @@ Vue.component('train', {
 
             img.file('project.json', JSON.stringify(project));
             zip.generateAsync({type:"blob"}).then(function(content) {
-                saveAs(content, "example.zip");
+                saveAs(content, "data.zip");
             });
         });
     }
@@ -104,7 +104,6 @@ Vue.component('train', {
     </div>
     <div class="mdl-card__actions mdl-card--border">
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="train">DATA</a>
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="https://colab.research.google.com/drive/17XcGqI4dpLhCIifcjmahUmGBTXZQG4ag?usp=sharing" target="blank">COLAB</a>
 
     <dropzone :current-project="currentProject" ref="dropzone"></dropzone>
     </div>

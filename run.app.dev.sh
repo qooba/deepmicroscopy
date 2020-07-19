@@ -30,15 +30,13 @@ docker run --runtime nvidia --network app_default -d --rm \
   -v $(pwd)/src/app:/app \
   -v $(pwd)/src/front:/front \
   -v $(pwd)/src/nginx:/nginx \
-  -v $(pwd)/src/jupyter:/root/.jupyter \
-  -v $(pwd)/ssl:/ssl \
   --name app_rtc \
   qooba/deepmicroscopy:app_dev \
   watchmedo auto-restart -d . -p '*.py' --recursive -- python3 microscope.py
 
 #docker run --network app_default -it --rm -v /home/qba/Qooba/deepmicroscopy:/app --name app registry.gitlab.com/qooba/deepmicroscopy vim /app
 
-if [ -d "ssl" ]; then
+if [ ! -d "ssl" ]; then
 mkdir ssl
 mkdir ssl/private
 mkdir ssl/certs

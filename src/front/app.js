@@ -45,7 +45,23 @@ app=new Vue({
       this.$refs.camera.reload(this.currentProject, true);
     },
     create_project: function() {
+      refreshProjects=this.refreshProjects;
       this.newProjectDialog.showModal();
+      this.newProjectDialog.querySelector('.close').addEventListener('click', function() {
+          newProjectDialog.close();
+      });
+      this.newProjectDialog.querySelector('.create').addEventListener('click', function() {
+          newProjectName=newProjectDialog.querySelector('#new_project_name').value;
+          console.log(newProjectName)
+  	    axios.post("/api/projects", {
+  	      name: newProjectName
+  	    }).then(async response => {
+            await refreshProjects();
+  	    	console.log(response);
+  	    });
+  
+          newProjectDialog.close();
+      });
     },
     sendMessage: function(message) {
       this.ws.send(message)
@@ -57,36 +73,24 @@ app=new Vue({
       } else if(this.$refs.camera.eval==true) {
         this.$refs.camera.reload(this.currentProject, true);
       }
+    },
+    refreshProjects: function(){
+      return axios
+      .get("/api/projects")
+      .then(response => {
+        console.log(response)
+        this.projects = response.data;
+        if(this.projects.length != 0){
+          this.currentProject = this.projects[0].name;
+        }
+      })
 
     }
   },
   created: function () {
-    axios
-    .get("/api/projects")
-    .then(response => {
-      console.log(response)
-      this.projects = response.data;
-      this.currentProject = this.projects[0].name
-    })
-
-
+    this.refreshProjects();
     dialog = document.querySelector('#dialog');
     this.newProjectDialog = document.querySelector('#newProjectDialog');
-    this.newProjectDialog.querySelector('.close').addEventListener('click', function() {
-        newProjectDialog.close();
-    });
-    this.newProjectDialog.querySelector('.create').addEventListener('click', function() {
-        newProjectName=newProjectDialog.querySelector('#new_project_name').value;
-        console.log(newProjectName)
-	    axios.post("/api/projects", {
-	      name: newProjectName
-	    }).then(response => {
-	    	console.log(response);
-	    });
-
-        newProjectDialog.close();
-    });
-
     toast = document.querySelector('#toast');
   }  
 });
