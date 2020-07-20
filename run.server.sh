@@ -11,4 +11,4 @@ docker run --gpus all --network app_default -d --rm \
   --name tensorboard \
   qooba/deepmicroscopy:server tensorboard --logdir /deepmicroscopy --path_prefix /tensorboard
 
-docker run -d --rm --network app_default --name nginx -p 80:80 -p 443:443 qooba/deepmicroscopy/serverfront
+docker run -d --rm --network app_default --name nginx -p 80:80 -p 443:443 qooba/deepmicroscopy:serverfront
