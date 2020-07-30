@@ -1,6 +1,7 @@
 # deepmicroscopy
 
 Deep learning in microscopy
+Read more on [https://qooba.net/2020/07/31/deepmicroscopy-my-portable-ml-laboratory/](https://qooba.net/2020/07/31/deepmicroscopy-my-portable-ml-laboratory/)
 
 ## Chrome configuration
 
